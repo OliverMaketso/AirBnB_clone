@@ -1,5 +1,13 @@
 #!/usr/bin/python3
 import json
+from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.place import Place
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
+import os
 
 class FileStorage:
     """
@@ -36,12 +44,12 @@ class FileStorage:
         """
         serializes objects stored in the FileStorage to a JSON file.
         """
-        serialized_objects = {}
-        for key, value in self.__objects.items():
-            serialized_objects[key] = value.to_dict()
+        json_dict = {}
+        for key, value in FileStorage.__objects.items():
+            json_dict[key] = value.to_dict()
 
-        with open(self.__file_path, 'w') as file:
-            json.dump(serialized_objects, file)
+        with open(FileStorage.__file_path, mode='w', encoding="utf-8") as file:
+            json.dump(json_dict, file)
 
     def reload(self):
         """
